@@ -436,13 +436,13 @@ def gpufilter(buff, fs=None, fslow=None, fshigh=None, order=3,
     return dataRAW
 
 def get_filter_params(fs, fshigh=None, fslow=None, order=3):
-    # Wn should be the cutoff frequency in fraction of the Nyquist frequency:
-    # fc / (fs / 2) = fc / fs * 2
-    if fslow and fslow < fs / 2:
-        return butter(order, (2 * fshigh / fs, 2 * fslow / fs), 'bandpass')
+    if fslow and (fslow < (fs / 2)) and fshigh:
+        return butter(order, (2 * fslow / fs, 2 * fshigh / fs), 'bandpass')
+    elif fslow and not fshigh:
+        return butter(order, 2 * fslow / fs, 'low')
     else:
-        return butter(order, fshigh / fs * 2, 'high')
-
+        return butter(order, 2 * fshigh / fs, 'high')
+    
 def make_kernel(kernel, name, **const_arrs):
     """Compile a kernel and pass optional constant ararys."""
     mod = cp_core.core.compile_with_cache(kernel, prepend_cupy_headers=False)

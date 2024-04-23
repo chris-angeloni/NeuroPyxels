@@ -199,6 +199,17 @@ def list_files(directory, extension, full_path=False):
         return [Path('/'.join([directory,f])) for f in files]
     return files
 
+def find_files(folder, filestr, foldstr=''):
+    """
+    Lists files containing "fstr" in directory "folder". Optionally filter folders containing "foldstr".
+    """
+    d = []
+    for root, _, files in os.walk(folder):
+        file = [f for f in files if filestr in f]
+        if (len(file) > 0) & (foldstr in root):
+            d.append({'root': root, 'files': file})
+    return d
+
 
 #%% Text formatting utilities
 

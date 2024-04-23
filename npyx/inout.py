@@ -172,10 +172,11 @@ def metadata(dp):
                 binary_rel_path = binary_folder+binary_file[0]
                 meta[filt_key]['binary_relative_path']=binary_rel_path
                 meta[filt_key]['binary_byte_size']=os.path.getsize(dp/binary_rel_path)
-                if filt_key=='highpass' and params_f.exists():
-                    if params['dat_path']!=binary_rel_path:
-                        print((f'\033[34;1mWARNING edit dat_path in params.py '
-                        f'so that it matches relative location of high pass filtered binary file: {binary_rel_path}'))
+                #if filt_key=='highpass' and params_f.exists():
+                    #if params['dat_path']!=binary_rel_path:
+                        #continue
+                        #print((f'\033[34;1mWARNING edit dat_path in params.py '
+                        #f'so that it matches relative location of high pass filtered binary file: {binary_rel_path}'))
             else:
                 meta[filt_key]['binary_relative_path']='not_found'
                 meta[filt_key]['binary_byte_size']='unknown'
